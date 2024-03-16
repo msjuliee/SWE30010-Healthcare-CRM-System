@@ -8,3 +8,18 @@ As this is a serious vulnerability, our team requires that the development team 
 Our team will also perform additional testing on the rest of this item to ensure that this does not happen on other components.
 
 
+Day 7: 
+The modify functionality of this item is susceptible to Union-based SQL Injection attack, for example, if a user submits the new email “luandang@work.com”, the application will perform the following SQL Query to update the new information:
+Update users
+Set email = ‘luandang@work.com`
+Where id = 123
+The attacker can insert the following payload:
+luandang@work.com’ UNION SELECT * FROM users WHERE username=’admin’-- 
+ This will cause our logic to be manipulated to the will of the attacker
+Update users
+Set email = ‘luandang@work.com`
+UNION SELECT * FROM users 
+WHERE username =’admin’
+
+
+Our team requires that the development team implement sufficient input validation to mitigate this vulnerability. Our team concludes that there is no other vulnerability apart from the current existing on modify user information functionality.
